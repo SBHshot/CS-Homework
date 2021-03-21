@@ -39,15 +39,16 @@ int main (void){
 		while (1) { //此while迴圈為輸入下注號碼之條件判斷與控制
 			printf("請輸入一注彩券號碼:");
 	    	fgets(string,sizeof(string),stdin); //輸入內容
-			if (strcmp(string,"f\n")==0){		//做字串中字符比較,若為"f"則跳出主要while迴圈,"e"則結束執行.
+	    	token = strtok(string,",\n");		//將輸入字串中","去除,只留下數字、字母並儲存於token
+			if (strcmp(token,"f\n")==0){		//做字串中字符比較,若為"f"則跳出主要while迴圈,"e"則結束執行.
 		        printf("輸入完畢\n");
 		        break;							//strcmp為字串比較函數
-		    }else if (strcmp(string,"e\n")==0)
+		    }else if (strcmp(token,"e\n")==0)
 		    {
 		        exit(0);
 		    }
 			
-			token = strtok(string,",\n");		//將輸入字串中","去除,只留下數字、字母並儲存於token
+
 			num = 0;
 			retry = 0;
 			while(token != NULL){				//判斷token內不為空的清況,若為空則不執行此while內程式
@@ -117,15 +118,16 @@ int main (void){
 	  	while (1) {	//此while迴圈為輸入頭獎號碼之條件判斷與控制
 	    	printf("請輸入本期大樂透開獎號碼:");
 	    	fgets(string,sizeof(string),stdin); //輸入內容
-		    if (strcmp(string,"c\n")==0){
+	      	token = strtok(string, ",\n");		//將輸入字串中","去除,只留下數字、字母並儲存於token
+		    if (strcmp(token,"c\n")==0){
 				r=1;
 				break;
 		    }
-		    else if (strcmp(string,"e\n")==0)
+		    else if (strcmp(token,"e\n")==0)
 		    {
 		        exit(0);
 		    }
-	      	token = strtok(string, ",\n");		//將輸入字串中","去除,只留下數字、字母並儲存於token
+
 	    	num=0;
 	    	retry=0;
 	    	while( token != NULL ) {			//判斷token內不為空的清況,若為空則不執行此while內程式
