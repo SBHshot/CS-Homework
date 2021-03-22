@@ -26,8 +26,9 @@ int main (void){
 	int r;
 	int enter;
 	/*起始介紹*/
-	printf("***歡迎使用大樂透對獎系統***Powered by E54071112黃穎俊\n\n");
-	printf("###本程式使用說明###\n");
+	printf("***歡迎使用大樂透對獎系統***\n\n");
+	printf("Powered by E54071112黃穎俊\n\n");
+	printf("###本程式使用說明###\n\n");
 	printf("1.本程式在輸入號碼時,請以半型逗號隔開。\n");
 	printf("2.本程式可連續輸入多筆下注號碼,每輸入一筆,請按enter儲存,並進行下一筆號碼的輸入。\n");
 	printf("3.當輸入完畢後,請輸入f,即可輸入中獎號碼,並開始進行對獎;或是當您不想使用了,輸入e即可離開本程式。\n");
@@ -35,20 +36,21 @@ int main (void){
 	printf("5.當您完成輸入後,卻發現還沒開獎,您也可以輸入e結束本程式。\n");
 	printf("\n");
 	/*輸入下注號碼*/
-	while(r=1){ //當在執行頭獎輸入時,按"c"須返回下注號碼輸入,然後不斷重複
-		while (1) { //此while迴圈為輸入下注號碼之條件判斷與控制
-			printf("請輸入一注彩券號碼:");
+	while(r=1){ //當在執行頭獎輸入時,按"c"須返回下注號碼輸入,然後不斷重複(第3個while)
+		while (1) { //此while迴圈為輸入下注號碼之條件判斷與控制(第1個while)
+			printf("請輸入一注彩券號碼(共6個數字):");
 	    	fgets(string,sizeof(string),stdin); //輸入內容
-	    	token = strtok(string,",\n");		//將輸入字串中","去除,只留下數字、字母並儲存於token
-			if (strcmp(token,"f\n")==0){		//做字串中字符比較,若為"f"則跳出主要while迴圈,"e"則結束執行.
+
+			if (strcmp(string,"f\n")==0){		//做字串中字符比較,若為"f"則跳出主要while迴圈,"e"則結束執行.
 		        printf("輸入完畢\n");
 		        break;							//strcmp為字串比較函數
-		    }else if (strcmp(token,"e\n")==0)
-		    {
+		    }else if (strcmp(string,"c\n")==0){
+				continue;
+		    }else if (strcmp(string,"e\n")==0){
 		        exit(0);
 		    }
 			
-
+	    	token = strtok(string,",\n");		//將輸入字串中","去除,只留下數字、字母並儲存於token
 			num = 0;
 			retry = 0;
 			while(token != NULL){				//判斷token內不為空的清況,若為空則不執行此while內程式
@@ -115,19 +117,19 @@ int main (void){
 
 		/*輸入頭獎號碼*/
 		printf("--------------------------------------------------------\n");
-	  	while (1) {	//此while迴圈為輸入頭獎號碼之條件判斷與控制
+	  	while (1) {	//此while迴圈為輸入頭獎號碼之條件判斷與控制(第2個while)
 	    	printf("請輸入本期大樂透開獎號碼:");
 	    	fgets(string,sizeof(string),stdin); //輸入內容
-	      	token = strtok(string, ",\n");		//將輸入字串中","去除,只留下數字、字母並儲存於token
-		    if (strcmp(token,"c\n")==0){
+	      			//將輸入字串中","去除,只留下數字、字母並儲存於token
+		    if (strcmp(string,"c\n")==0){
 				r=1;
 				break;
 		    }
-		    else if (strcmp(token,"e\n")==0)
+		    else if (strcmp(string,"e\n")==0)
 		    {
 		        exit(0);
 		    }
-
+			token = strtok(string, ",\n");
 	    	num=0;
 	    	retry=0;
 	    	while( token != NULL ) {			//判斷token內不為空的清況,若為空則不執行此while內程式
