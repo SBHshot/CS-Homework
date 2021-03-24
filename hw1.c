@@ -23,7 +23,7 @@ int main (void){
 	int retry = 0; //判斷是否要重新輸入
 	int counter = 0;//投注數目
 	int num = 0; //每一注號碼數目
-	int r;
+	int i,j,r,t;
 	int enter;
 	/*起始介紹*/
 	printf("***歡迎使用大樂透對獎系統***\n\n");
@@ -65,7 +65,7 @@ int main (void){
 		    		retry = 1;
 		    		break;
 		    	}
-		    	for (int i=0; i < num; i++)		//若陣列數字皆在範圍內,則進一步判斷是否重複,若重複則顯示重複的數字,並跳脫for迴圈
+		    	for (i=0; i < num; i++)		//若陣列數字皆在範圍內,則進一步判斷是否重複,若重複則顯示重複的數字,並跳脫for迴圈
 		    	{
 		    		if (selection[counter][i] == atoi(token))
 		    		{
@@ -89,8 +89,8 @@ int main (void){
 	    		continue;
 	    	}
 	  		//將陣列中數字進行BubbleSort排序
-	     	for (int i=0;i < SIZE;i++){
-	      		for (int j=i+1;j < SIZE;j++){
+	     	for (i=0;i < SIZE;i++){
+	      		for (j=i+1;j < SIZE;j++){
 	      			if (selection[counter][i] > selection[counter][j]){
 	          			k = selection[counter][i] ;
 	          			selection[counter][i] = selection[counter][j];
@@ -104,10 +104,10 @@ int main (void){
 		printf("您總共輸入了%d注\n",counter);
 		printf("以下是您的投注號碼\n");
 		
-		for (int i = 0; i < counter ; i++)
+		for (i = 0; i < counter ; i++)
 		{
 			printf("第%d注為: ",i+1);
-			for (int j = 0; j < SIZE; j++)
+			for (j = 0; j < SIZE; j++)
 			{
 				printf("%d ", selection[i][j]);
 			}
@@ -144,7 +144,7 @@ int main (void){
 	    		retry = 1;
 	    		break;
 	    	}
-	    	for (int i=0; i < num; i++)			//若陣列數字皆在範圍內,則進一步判斷是否重複,若重複則顯示重複的數字,並跳脫for迴圈
+	    	for (i=0; i < num; i++)			//若陣列數字皆在範圍內,則進一步判斷是否重複,若重複則顯示重複的數字,並跳脫for迴圈
 	    	{
 	    		if (lottery[i] == atoi(token))
 	    		{
@@ -187,7 +187,7 @@ int main (void){
 	}
   	printf("本期樂透頭獎中獎號碼為: ");
   	int *sorted = selection_sort(lottery);
-  	for (int t = 0; t < SIZE; t++){
+  	for (t = 0; t < SIZE; t++){
 			printf("%d ",sorted[t]);
 	}
 	printf(" 特別號為:%d\n",lottery[6]);
@@ -198,10 +198,10 @@ int main (void){
 		printf("您未成功輸入號碼,無法為您對獎,程式結束.\n");
 	}
 	/*若是中了一般號碼,點數+1;中特別號的話,點數+10。再由所累積點數判斷獎項為何*/
-	for (int i = 0; i < counter; i++){
-		for (int j = 0; j < SIZE; j++){
+	for (i = 0; i < counter; i++){
+		for (j = 0; j < SIZE; j++){
 			//比對是否中一般號碼
-			for (int k = 0; k < SIZE; k++){
+			for (k = 0; k < SIZE; k++){
 				if (selection[i][j] == lottery[k]){
 					point++;
 				}
