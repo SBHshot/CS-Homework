@@ -1,0 +1,14 @@
+?:X
+=====Kmap=====
+  \ A|       |
+ B \ | 0   1 |
+-----+---+---+
+   0 | 1 | X |
+-----+---+---+
+   1 | 1 | X |
+-----+---+---+
+
+
+prime implcant
+essential prime implicant:
+F(A, B, C, D) = Σm(0,1)

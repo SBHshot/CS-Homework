@@ -80,7 +80,7 @@ int main (void){
 		    	//當條件皆符合則清空token,並判斷下一個數字
 		        token = strtok(NULL, ",\n");
 		        num++;
-			}
+			} //End while
 			if (retry == 1){
 	    		continue;
 	    	}
