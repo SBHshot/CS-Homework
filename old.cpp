@@ -6,32 +6,7 @@
 #include <iomanip>
 #include <map>
 #include <vector>
-#include <bitset>
 using namespace std;
-void IntializeKMap_two();
-struct KmapElement
-{
-	int state;
-	int DecimalMinterm;
-	int inclusion = 0;
-	string binaryminterm;
-};
-struct Implicant
-{
-	vector <KmapElement> minterms;
-	int Size;
-};
-vector <KmapElement> V1, V2, V3, V4, V5, V6, AllElemntsInImplicant;;
-vector <KmapElement>::iterator it_k;
-vector <Implicant> AllImplicants;
-int numberOfMinterms = 0;
-int DecimalMinterms_two[3];
-const int ROWS_two = 2,COLUMNS_two=2;
-KmapElement Kmap_two[ROWS_two][COLUMNS_two];
-const int ROWS_three = 2,COLUMNS_three=4;
-KmapElement Kmap_three[ROWS_three][COLUMNS_three];
-const int ROWS_four = 4,COLUMNS_four=4;
-KmapElement Kmap_four[ROWS_four][COLUMNS_four];
 
 int main(){
     //int i;
@@ -41,9 +16,8 @@ int main(){
     //int num_V;
     int num_M;
     int num_D;
-    vector<string> bin;
+    vector<string> arr;
     vector<string>::iterator it_i;
-    string result = "fuxk";
     //宣告變數(存入txt內容)
     string line;
     string size;
@@ -56,7 +30,8 @@ int main(){
     string a10 = "10";
     string a01 = "01";
     string a00 = "00";
-    //處理化簡
+
+
     //開啟input檔案
     ifstream input("input.txt");
     if (!input){
@@ -69,25 +44,23 @@ int main(){
             for (size_t i = 0; i < sizeof(line); i++){
                 don = line;
             }//end for
-            
+            //cout << "Don't Care:" << don << endl;
             
         }//end if
         else if (line[1]=='v'){
             for (size_t i = 0; i < sizeof(line); i++){
                 size = line;
             }
-            
+            //cout << "Size:" << size << endl;
         }//end if
         else if (line[1]=='m'){
             for (size_t i = 0; i < sizeof(line); i++){
                 minTerm = line;
             }//end for
-            
+            //cout << "minTerm:" << minTerm << endl;
         }//end elif
     }//end while
-    cout << "Don't Care:" << don[1] << endl;
-    cout << "Size:" << size[1] << endl;
-    cout << "minTerm:" << minTerm[1] << endl;
+
     /*處理size*/
     //將string轉換為char
     int v = size.substr(3).length();
@@ -97,12 +70,12 @@ int main(){
     for (int i = 0; i < v; i++){
         vsize[i] = atoi(buff_v);
     }//end for
-    cout << "v的個數:" << v << endl;
+    //cout << "v的個數:" << v << endl;
     //cout << "vValue:";
     //for (int i = 0; i < v; i++){
     //    cout << vsize[i] << " ";
     //}//end for
-    //cout << "\n";
+    cout << "\n";
 
     /*處理minTerm*/
     //利用subsbtr去除前方flag
@@ -111,7 +84,6 @@ int main(){
     char *buff_m = (char *)malloc(m+1);
     memcpy(buff_m,minTerm.substr(3).c_str(),m+1);
     char *splitStrM = strtok(buff_m,  ",");
-    cout << "m的個數:" << m << endl;
     num_M = 0;
     while (splitStrM != NULL){
     //  cout << splitStrM << " ";
@@ -119,9 +91,9 @@ int main(){
         splitStrM = strtok(nullptr, ",");
         num_M++;
     }//end while
-    //cout << endl;
+    cout << endl;
     //for (int i = 0; i < num_M; i++){
-    //    cout << "M:" << msize[i] << endl;
+    //    cout << msize[i] << " ";
     //}//end for
     free(buff_m);
     /*處理Don't Care*/
@@ -131,7 +103,6 @@ int main(){
     char *buff_d = (char *)malloc(d+1);
     memcpy(buff_d,don.substr(3).c_str(),d+1);
     char *splitStrD = strtok(buff_d,  ",");
-    cout << "d的個數:" << d << endl;
     num_D = 0;
     while (splitStrD != NULL){
     //   cout << splitStrD << " ";
@@ -145,8 +116,8 @@ int main(){
     //}
     free(buff_d);
     
-    cout << "numbers:" << num_M << endl; 
     //宣告size=2時的內容
+    
     string b11 = " ",b12 = " ",b21 = " ",b22 = " ";
     string c11 = " ",c12 = " ",c13 = " ",c14 = " ",c21 = " ",c22 = " ",c23 = " ",c24 = " ";
     string d11 = " ",d12 = " ",d13 = " ",d14 = " ",d21 = " ",d22 = " ",d23 = " ",d24 = " ",d31 = " ",d32 = " ",d33 = " ",d34 = " ",d41 = " ",d42 = " ",d43 = " ",d44 = " ";
@@ -172,12 +143,16 @@ int main(){
                 if(sizeTwo[x.first]== " "){
                     sizeTwo[x.first] = "0";
                 }//End if
-             
+                if (sizeTwo[x.first] == "1"){
+                    arr.push_back(to_string(x.first));
+                    arr.push_back(",");
+                }
                 //cout << x.first << ":" << x.second << endl;
-            }//End for         
+            }//End for
+            arr.pop_back();           
             /*print to terminal*/
-            
             /*圖表*/
+            cout << "?:"<< sizeTwo[2].c_str() << endl;
             cout << "=====" << setw(1) << "Kmap" << setw(1) << "=====" <<endl;
             cout << setw(3) << "\\"<< setw(2) << "A"  << setw(1) << "|" << setw(8) << "|" << endl;
             cout << setw(2) << "B" << setw(2) << "\\" << setw(2) << "|" << setw(2) << "0" << setw(4) << a1 << setw(2) << "|"<< endl;
@@ -186,83 +161,17 @@ int main(){
             cout << "-----" << setw(1) << "+"  << setw(1) << "---" << setw(1) << "+" << setw(1) << "---" << setw(1) << "+" <<endl;
             cout << setw(4) << a1 << setw(2) << "|" << setw(2) << sizeTwo[1].c_str() << setw(2) << "|" << setw(2) << sizeTwo[3].c_str() << setw(2) << "|" << endl;
             cout << "-----" << setw(1) << "+"  << setw(1) << "---" << setw(1) << "+" << setw(1) << "---" << setw(1) << "+" <<endl;
-            cout << "sizeTwoSize:" << num_M+num_D << endl;
-            
-            //改以int紀錄每格的情形
-            if (sizeTwo[0] == "1"){
-                Kmap_two[0][0].state = 1;
-            }else if (sizeTwo[0] == "X"){
-                Kmap_two[0][0].state = 2;
-            }else if (sizeTwo[0] == "0"){
-                Kmap_two[0][0].state = 0;
-            }
-            if (sizeTwo[1] == "1"){
-                Kmap_two[1][0].state = 1;
-            }else if (sizeTwo[1] == "X"){
-                Kmap_two[1][0].state = 2;
-            }else if (sizeTwo[1] == "0"){
-                Kmap_two[1][0].state = 0;
-            } 
-            if (sizeTwo[2] == "1"){
-                Kmap_two[0][1].state = 1;
-            }else if (sizeTwo[2] == "X"){
-                Kmap_two[0][1].state = 2;
-            }else if (sizeTwo[2] == "0"){
-                Kmap_two[0][1].state = 0;
-            } 
-            if (sizeTwo[3] == "1"){
-                Kmap_two[1][1].state = 1;
-            }else if (sizeTwo[3] == "X"){
-                Kmap_two[1][1].state = 2;
-            }else if (sizeTwo[3] == "0"){
-                Kmap_two[1][1].state = 0;
-            }
-            /*確認是否紀錄成功*/
-            for (int i = 0; i < ROWS_two; i++){
-                for (int j = 0; j < COLUMNS_two; j++){
-                    cout << Kmap_two[i][j].state << " ";
-                }  
-            }
-            /*結果判斷*/            
-            if(num_M == 0){
-                result = "0";
-            }else if (num_M + num_D == 4 && (num_M >= 1)){
-                result = "1";
-            }else {
-                for (int i = 0; i < ROWS_two; i++){
-                    for (int j = 0; j < COLUMNS_two; j++){
-                        if(Kmap_two[i][j].state == 1){
-                            V1.push_back(Kmap_two[i][j]);
-                            if (Kmap_two[i][(j+1)/COLUMNS_two].state == 1){
-                                V2.push_back(Kmap_two[i][j]);
-                                V2.push_back(Kmap_two[i][(j+1)/COLUMNS_two]);
-                            }
-                            if (Kmap_two[(i + 1) % ROWS_two][j].state == 1)  {
-
-                            }
-                            
-                        }
-                    
-                    }
-                }
-                
-            }
-            
-            
-            
-            
-            
-            
-            
-            
+            cout << endl;
             cout << endl;
             /*資訊*/
-            cout << "prime implicant" << endl;
+            cout << "prime implcant" << endl;
             cout << "essential prime implicant:" << endl;
-            cout << "F(A, B, C, D) = " << result;
-
+            cout << "F(A, B, C, D) = " << "\u03A3" << "m(";
+            for(it_i=arr.begin();it_i != arr.end();++it_i) cout << *it_i;
+            cout << ")" << endl;
             /*export txt*/
             /*圖表*/
+            output << "?:"<< sizeTwo[2].c_str() << endl;
             output << "=====" << setw(1) << "Kmap" << setw(1) << "=====" <<endl;
             output << setw(3) << "\\"<< setw(2) << "A"  << setw(1) << "|" << setw(8) << "|" << endl;
             output << setw(2) << "B" << setw(2) << "\\" << setw(2) << "|" << setw(2) << "0" << setw(4) << a1 << setw(2) << "|"<< endl;
@@ -274,9 +183,11 @@ int main(){
             output <<endl;
             output <<endl;
             /*資訊*/
-            output << "prime implicant" << endl;
+            output << "prime implcant" << endl;
             output << "essential prime implicant:" << endl;
-            output << "F(A, B, C, D) = " << result;
+            output << "F(A, B, C, D) = " << "\u03A3" << "m(";
+            for(it_i=arr.begin();it_i != arr.end();++it_i) output << *it_i;
+            output << ")" << endl;           
         }//End if
         else if (vsize[0]==4){
             for(auto &x : sizeFour){
@@ -294,19 +205,14 @@ int main(){
                 if(sizeFour[x.first]== " "){
                     sizeFour[x.first] = "0";
                 }//End if
-                /*
                 if (sizeFour[x.first] == "1"){
                     arr.push_back(to_string(x.first));
                     arr.push_back(",");
-                }else if (sizeFour[x.first] == "X"){
-                    arr2.push_back(to_string(x.first));
-                    arr2.push_back(",");
                 }
-                */
                 //cout << x.first << ":" << x.second << " ";
             }//End For
-            //arr.pop_back();
-            //arr2.pop_back();
+            arr.pop_back();
+            
             cout << endl;
             /*print to terminal*/
             /*圖表*/
@@ -325,13 +231,11 @@ int main(){
             cout << endl;
             cout << endl;
             /*資訊*/
-            cout << "prime implicant" << endl;
+            cout << "prime implcant" << endl;
             cout << "essential prime implicant:" << endl;
             cout << "F(A, B, C, D) = " << "\u03A3" << "m(";
-            //for(it_i=arr.begin();it_i != arr.end();++it_i) cout << *it_i;
-            cout << ") + \u03A3d(";
-            //for(it_i=arr2.begin();it_i != arr2.end();++it_i) cout << *it_i;
-            cout << ")";
+            for(it_i=arr.begin();it_i != arr.end();++it_i) cout << *it_i;
+            cout << ")" << endl;
             /*export txt*/
             /*圖表*/
             output << "=========" << setw(1) << "Kmap" << setw(1) << "=========" <<endl;
@@ -349,13 +253,11 @@ int main(){
             output <<endl;
             output <<endl;
             /*資訊*/
-            output << "prime implicant" << endl;
+            output << "prime implcant" << endl;
             output << "essential prime implicant:" << endl;
             output << "F(A, B, C, D) = " << "\u03A3" << "m(";
-            //for(it_i=arr.begin();it_i != arr.end();++it_i) output << *it_i;
-            output << ") + \u03A3d(";
-            //for(it_i=arr2.begin();it_i != arr2.end();++it_i) output << *it_i;
-            output << ")";
+            for(it_i=arr.begin();it_i != arr.end();++it_i) output << *it_i;
+            output << ")" << endl;
         }//End elif
         else if (vsize[0]==3){
             for(auto &x : sizeThree){
@@ -372,20 +274,9 @@ int main(){
                 }//End for
                 if(sizeThree[x.first]== " "){
                     sizeThree[x.first] = "0";
-                }
-                if (sizeThree[x.first] == "1"){
-                    //arr.push_back(to_string(x.first));
-                    //arr.push_back(",");
-                }else if (sizeThree[x.first] == "X"){
-                    //arr2.push_back(to_string(x.first));
-                    //arr2.push_back(",");
-                }
-                //End if
+                }//End if
                 //cout << x.first << ":" << x.second << endl;
             }//End for
-            //arr.pop_back();
-            //arr2.pop_back();
-            cout << endl;
             /*print to terminal*/
             /*圖表*/
             cout << "=========" << setw(1) << "Kmap" << setw(1) << "=========" <<endl;
@@ -399,13 +290,11 @@ int main(){
             cout << endl;
             cout << endl;
             /*資訊*/
-            cout << "prime implicant" << endl;
+            cout << "prime implcant" << endl;
             cout << "essential prime implicant:" << endl;
             cout << "F(A, B, C, D) = " << "\u03A3" << "m(";
-            //for(it_i=arr.begin();it_i != arr.end();++it_i) cout << *it_i;
-             cout << ") + \u03A3d(";
-            //for(it_i=arr2.begin();it_i != arr2.end();++it_i) cout << *it_i;
-            cout << ")";
+            for(it_i=arr.begin();it_i != arr.end();++it_i) cout << *it_i;
+            cout << ")" << endl;
             /*export txt*/
             /*圖表*/
             output << "=========" << setw(1) << "Kmap" << setw(1) << "=========" <<endl;
@@ -419,18 +308,15 @@ int main(){
             output << endl;
             output << endl;
             /*資訊*/
-            output << "prime implicant" << endl;
+            output << "prime implcant" << endl;
             output << "essential prime implicant:" << endl;
             output << "F(A, B, C, D) = " << "\u03A3" << "m(";
-            //for(it_i=arr.begin();it_i != arr.end();++it_i) output << *it_i;
-            output << ") + \u03A3d(";
-            //for(it_i=arr2.begin();it_i != arr2.end();++it_i) output << *it_i;
-            output << ")";
+            for(it_i=arr.begin();it_i != arr.end();++it_i) output << *it_i;
+            output << ")" << endl;
             
         }//End Elif
     }//End if(output.is_open())
-    //bin.pop_back(",");
-    for(it_i=bin.begin();it_i != bin.end();++it_i) cout << *it_i << endl;
+
 
 
     //關閉檔案
@@ -442,40 +328,3 @@ int main(){
     
     return 0;
 }//End main()
-void IntializeKMap_two()
-{
-	for (int i = 0; i < ROWS_two; i++){
-		for (int j = 0; j < COLUMNS_two; j++){
-			Kmap_two[i][j].state = 0;
-        }
-    }
-	Kmap_two[0][0].DecimalMinterm = 0;
-	Kmap_two[0][1].DecimalMinterm = 1;
-	Kmap_two[0][2].DecimalMinterm = 3;
-	Kmap_two[0][3].DecimalMinterm = 2;
-	Kmap_two[1][0].DecimalMinterm = 4;
-	Kmap_two[1][1].DecimalMinterm = 5;
-	Kmap_two[1][2].DecimalMinterm = 7;
-	Kmap_two[1][3].DecimalMinterm = 6;
-
-
-	for (int i = 0; i < numberOfMinterms; i++)
-	{
-		if (DecimalMinterms_two[i] == 0)
-			Kmap_two[0][0].state = 1;
-		else if (DecimalMinterms_two[i] == 1)
-			Kmap_two[0][1].state = 1;
-		else if (DecimalMinterms_two[i] == 3)
-			Kmap_two[0][2].state = 1;
-		else if (DecimalMinterms_two[i] == 2)
-			Kmap_two[0][3].state = 1;
-		else if (DecimalMinterms_two[i] == 4)
-			Kmap_two[1][0].state = 1;
-		else if (DecimalMinterms_two[i] == 5)
-			Kmap_two[1][1].state = 1;
-		else if (DecimalMinterms_two[i] == 7)
-			Kmap_two[1][2].state = 1;
-		else if (DecimalMinterms_two[i] == 6)
-			Kmap_two[1][3].state = 1;
-	}
-}
